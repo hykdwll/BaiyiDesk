@@ -14,9 +14,14 @@ src/version.rs
 *tgz
 cert.pfx
 *.bak
-*png
-*svg
-*jpg
+# 只忽略“生成的”图片资源中的临时产物；源码资源(res/、flutter/assets/ 等)必须入库
+# 原官方规则里的裸 *png / *svg / *jpg 会把源码自带资源全部剔除，导致 CI 缺文件
+# 现改为仅忽略仓库根目录的临时截图与截图产物
+/*.png
+/*.svg
+/*.jpg
+/screenshot*.png
+/screenshot*.svg
 sciter.dll
 **pdb
 src/bridge_generated.rs
