@@ -1303,7 +1303,19 @@ fn get_api_server_(api: String, custom: String) -> String {
     if !api.is_empty() {
         return api.to_owned();
     }
+    // 自定义服务器优先（用户在界面里填的 custom-rendezvous-server）
     let s0 = get_custom_rendezvous_server(custom);
+    // HDesk: 没有自定义服务器时，回退到编译期内置的 RENDEZVOUS_SERVERS，
+    // 绝不能回退到官方的 admin.rustdesk.com —— 那样登录/账号体系会跑到官方服务器上，
+    // 表现为“用户名密码登录不可用，只有 Google/GitHub 等第三方登录”。
+    let s0 = if s0.is_empty() {
+        config::RENDEZVOUS_SERVERS
+            .first()
+            .map(|x| x.to_string())
+            .unwrap_or_default()
+    } else {
+        s0
+    };
     if !s0.is_empty() {
         let s = crate::increase_port(&s0, -2);
         if s == s0 {
@@ -1317,7 +1329,9 @@ fn get_api_server_(api: String, custom: String) -> String {
             return format!("http://{}", s);
         }
     }
-    "https://admin.rustdesk.com".to_owned()
+    // 兜底：内置列表也为空时返回空串，让前端走“未配置 API 服务器”分支，
+    // 而不是静默连接到官方服务。
+    "".to_owned()
 }
 
 #[inline]
