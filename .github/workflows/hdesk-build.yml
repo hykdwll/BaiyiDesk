@@ -2,6 +2,19 @@ name: HDesk Build (Windows + macOS)
 
 on:
   workflow_dispatch:
+    inputs:
+      upload-artifact:
+        description: "上传构建产物"
+        type: boolean
+        default: true
+      upload-tag:
+        description: "产物标签"
+        type: string
+        default: "nightly"
+      publish-update-metadata:
+        description: "发布更新元数据（签名版需要，通常关闭）"
+        type: boolean
+        default: false
   workflow_call:
     inputs:
       upload-artifact:
@@ -56,7 +69,6 @@ env:
   PUBLISH_UPDATE_METADATA: "${{ inputs.publish-update-metadata }}"
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
 
-jobs:
 jobs:
   validate-update-metadata-keys:
     runs-on: ubuntu-22.04
