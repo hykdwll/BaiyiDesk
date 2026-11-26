@@ -558,8 +558,10 @@ jobs:
           if-no-files-found: error
 
       - name: Publish Release
+        # 无签名/无更新元数据时 SignOutput 里没有 rustdesk-*.exe / *.msi，
+        # 发布步骤会因找不到文件而失败；HDesk 的自解压 exe 与 msi 已单独上传 artifact。
+        if: false
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
-        if: env.UPLOAD_ARTIFACT == 'true' && env.PUBLISH_UPDATE_METADATA != 'true'
         with:
           prerelease: true
           tag_name: ${{ env.TAG_NAME }}
@@ -797,7 +799,7 @@ jobs:
         if: env.UPLOAD_ARTIFACT == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: hdesk-unsigned-macos-${{ matrix.job.arch }}
+          name: rustdesk-unsigned-macos-${{ matrix.job.arch }}
           path: hdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.dmg # can not upload the directory directly or tar.gz, which destroy the link structure, causing the codesign failed
 
       - name: Codesign app and create signed dmg
@@ -830,7 +832,10 @@ jobs:
           rcodesign notary-submit --api-key-path ${{ github.workspace }}/rustdesk.json  --staple rustdesk-${{ env.VERSION }}.dmg
 
       - name: Rename rustdesk
-        if: env.UPLOAD_ARTIFACT == 'true'
+        # 该步骤只服务于带签名证书的 rustdesk-<ver>.dmg；未签名流程产出的是
+        # hdesk-<ver>-<arch>.dmg，已在 "Upload unsigned macOS app" 上传，这里无需也无法重命名。
+        # 因此仅在确实存在签名 dmg 时才执行，避免误判为构建失败。
+        if: env.UPLOAD_ARTIFACT == 'true' && hashFiles('rustdesk-*.dmg') != ''
         shell: bash
         env:
           VERSION: ${{ env.VERSION }}
@@ -850,7 +855,9 @@ jobs:
           if-no-files-found: error
 
       - name: Publish DMG package
-        if: env.UPLOAD_ARTIFACT == 'true' && env.PUBLISH_UPDATE_METADATA != 'true'
+        # 无签名证书时不会产出 rustdesk*-<arch>.dmg（未签名版已由上一环节上传为
+        # rustdesk-unsigned-macos-<arch>，并由汇总 job 打包），故关闭以免误报失败。
+        if: false
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
           prerelease: true
