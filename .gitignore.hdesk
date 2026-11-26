@@ -1,0 +1,12 @@
+# HDesk 构建产物
+/target/
+/flutter/build/
+/flutter/.dart_tool/
+/flutter/lib/generated_bridge.dart
+/flutter/lib/generated_bridge.freezed.dart
+/flutter/macos/Runner/bridge_generated.h
+/src/bridge_generated.rs
+/src/bridge_generated.io.rs
+*.exe
+*.msi
+*.dmg
