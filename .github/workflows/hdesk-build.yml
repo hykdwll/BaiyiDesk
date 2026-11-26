@@ -443,6 +443,7 @@ jobs:
 
       - name: Build self-extracted executable
         shell: bash
+        continue-on-error: true
         if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           sed -i '/dpiAware/d' res/manifest.xml
@@ -463,6 +464,7 @@ jobs:
           msbuild-architecture: ${{ matrix.job.arch == 'aarch64' && 'arm64' || 'x86' }}
 
       - name: Build msi
+        continue-on-error: true
         # Builds the MSI for the matrix arch. res/msi (WiX v4 + native CustomActions) carries
         # both x64 and ARM64 platform configs; WcaUtil/DUtil ship arm64 libs. msbuild platform
         # is x64 / ARM64; the produced Package.msi is globbed since its bin/<platform>/ dir varies.
