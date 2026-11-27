@@ -279,8 +279,8 @@ docopt = "1.1"
 tokio = { version = "1.44", features = ["test-util"] }
 
 [package.metadata.bundle]
-name = "HDesk"
-identifier = "com.hdesk.hdesk"
+name = "BaiyiDesk"
+identifier = "com.baiyidesk.baiyidesk"
 icon = ["res/32x32.png", "res/128x128.png", "res/128x128@2x.png"]
 osx_minimum_system_version = "10.14"
 # View Camera needs NSCameraUsageDescription or macOS kills the process at the

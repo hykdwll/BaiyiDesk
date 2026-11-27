@@ -1305,7 +1305,7 @@ fn get_api_server_(api: String, custom: String) -> String {
     }
     // 自定义服务器优先（用户在界面里填的 custom-rendezvous-server）
     let s0 = get_custom_rendezvous_server(custom);
-    // HDesk: 没有自定义服务器时，回退到编译期内置的 RENDEZVOUS_SERVERS，
+    // BaiyiDesk: 没有自定义服务器时，回退到编译期内置的 RENDEZVOUS_SERVERS，
     // 绝不能回退到官方的 admin.rustdesk.com —— 那样登录/账号体系会跑到官方服务器上，
     // 表现为“用户名密码登录不可用，只有 Google/GitHub 等第三方登录”。
     let s0 = if s0.is_empty() {

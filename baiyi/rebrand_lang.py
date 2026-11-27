@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 src/lang/*.rs 里“显示文本”（元组第二个字符串）中的 RustDesk 替换为 HDesk。
+"""把 src/lang/*.rs 里“显示文本”（元组第二个字符串）中的 RustDesk 替换为 BaiyiDesk。
 
 关键约束：
 1. 绝不动 key —— 代码用 t!("About RustDesk") 这类 key 查表，key 改了文案就丢了。
@@ -29,7 +29,7 @@ for f in sorted(LANG_DIR.glob("*.rs")):
         key, val = m.group(1), m.group(2)
         if "RustDesk" in val:
             hits[0] += val.count("RustDesk")
-            val = val.replace("RustDesk", "HDesk")
+            val = val.replace("RustDesk", "BaiyiDesk")
         return f'("{key}", "{val}")'
 
     new = PAIR_RE.sub(sub, src)
@@ -39,4 +39,4 @@ for f in sorted(LANG_DIR.glob("*.rs")):
         total_hits += hits[0]
         print(f"  {f.name:12s} 替换 {hits[0]:3d} 处")
 
-print(f"\n共 {total_files} 个文件, {total_hits} 处显示文本已改为 HDesk")
+print(f"\n共 {total_files} 个文件, {total_hits} 处显示文本已改为 BaiyiDesk")

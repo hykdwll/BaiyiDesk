@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "HDesk" "\0"
-            VALUE "FileDescription", "HDesk Remote Desktop" "\0"
+            VALUE "CompanyName", "BaiyiDesk" "\0"
+            VALUE "FileDescription", "BaiyiDesk Remote Desktop" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "HDesk" "\0"
-            VALUE "LegalCopyright", "Copyright © 2026 HDesk. All rights reserved." "\0"
-            VALUE "OriginalFilename", "HDesk.exe" "\0"
-            VALUE "ProductName", "HDesk" "\0"
+            VALUE "InternalName", "BaiyiDesk" "\0"
+            VALUE "LegalCopyright", "Copyright © 2026 BaiyiDesk. All rights reserved." "\0"
+            VALUE "OriginalFilename", "BaiyiDesk.exe" "\0"
+            VALUE "ProductName", "BaiyiDesk" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

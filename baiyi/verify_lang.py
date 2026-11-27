@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""校验语言文件替换：元组数量不变、key 不变、value 仅 RustDesk->HDesk。"""
+"""校验语言文件替换：元组数量不变、key 不变、value 仅 RustDesk->BaiyiDesk。"""
 import re
 import subprocess
 import sys
@@ -25,7 +25,7 @@ for f in files:
     key_changed = sum(1 for (a, _), (b, _) in zip(om, nm) if a != b)
     val_changed = sum(1 for (_, a), (_, b) in zip(om, nm) if a != b)
     val_bad = sum(
-        1 for (_, a), (_, b) in zip(om, nm) if b != a.replace("RustDesk", "HDesk")
+        1 for (_, a), (_, b) in zip(om, nm) if b != a.replace("RustDesk", "BaiyiDesk")
     )
     cr = open(f"src/lang/{f}", "rb").read().count(b"\r")
 
