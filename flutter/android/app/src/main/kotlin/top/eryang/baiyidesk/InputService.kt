@@ -1,4 +1,4 @@
-package com.carriez.flutter_hbb
+package top.eryang.baiyidesk
 
 /**
  * Handle remote input and dispatch android gesture

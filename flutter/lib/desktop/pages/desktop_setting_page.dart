@@ -2603,6 +2603,9 @@ class _AboutState extends State<_About> {
                 height: 8.0,
               ),
               SelectionArea(
+                  child: const Text('百壹内部分发版本'))
+                  .marginSymmetric(vertical: 4.0),
+              SelectionArea(
                   child: Text('${translate('Version')}: $version')
                       .marginSymmetric(vertical: 4.0)),
               SelectionArea(
@@ -2623,14 +2626,6 @@ class _AboutState extends State<_About> {
                     translate('Privacy Statement'),
                     style: linkStyle,
                   ).marginSymmetric(vertical: 4.0)),
-              InkWell(
-                  onTap: () {
-                    launchUrlString('https://rustdesk.com');
-                  },
-                  child: Text(
-                    translate('Website'),
-                    style: linkStyle,
-                  ).marginSymmetric(vertical: 4.0)),
               Container(
                 decoration: const BoxDecoration(color: Color(0xFF2c8cff)),
                 padding:
@@ -2643,7 +2638,7 @@ class _AboutState extends State<_About> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Copyright © ${DateTime.now().toString().substring(0, 4)} Purslane Tech Pte. Ltd.\n$license',
+                            'Copyright © ${DateTime.now().toString().substring(0, 4)} 百壹 (Baiyi). All rights reserved.\n$license',
                             style: const TextStyle(color: Colors.white),
                           ),
                           Text(

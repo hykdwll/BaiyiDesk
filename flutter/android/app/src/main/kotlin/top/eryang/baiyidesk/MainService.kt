@@ -1,4 +1,4 @@
-package com.carriez.flutter_hbb
+package top.eryang.baiyidesk
 
 import ffi.FFI
 

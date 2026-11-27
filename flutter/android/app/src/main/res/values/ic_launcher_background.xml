@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#ffffff</color>
+    <!-- Baiyi: adaptive icon 背景取图标主蓝，前景按 72% 安全区留白 -->
+    <color name="ic_launcher_background">#1A6BF0</color>
 </resources>
