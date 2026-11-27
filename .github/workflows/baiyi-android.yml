@@ -27,8 +27,14 @@ env:
   UPLOAD_ARTIFACT: ${{ inputs.upload-artifact && 'true' || 'false' }}
 
 jobs:
+  # 独立 workflow 不会继承 flutter-build.yml 的 generate-bridge，
+  # 必须自己跑一遍，否则下面 download-artifact 拿不到 bridge-artifact。
+  generate-bridge:
+    uses: ./.github/workflows/bridge.yml
+
   baiyi-android-apk:
     name: build rustdesk android apk ${{ matrix.job.target }}
+    needs: [generate-bridge]
     runs-on: ${{ matrix.job.os }}
     strategy:
       fail-fast: false
