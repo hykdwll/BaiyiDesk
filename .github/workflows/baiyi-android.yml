@@ -4,6 +4,12 @@ name: BaiyiDesk Android APK
 # 上游 flutter-build.yml 会把 Linux/Windows/macOS/Web 全部构建一遍，
 # 只为拿一个 APK 太浪费。
 
+# softprops/action-gh-release 需要 contents:write 才能建 Release / 打 tag。
+# 仓库默认 token 权限是只读，不显式声明会报
+# "Resource not accessible by integration"（且是编译完成之后才炸，白等一轮）。
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -340,6 +346,9 @@ jobs:
             ${{steps.sign-rustdesk.outputs.signedReleaseFile}}
 
       - name: Publish unsigned apk package
+        # 三个架构并发往同一个 tag 发 Release 本身就是竞态；且这一步只是"顺手发个
+        # Release"，APK 已经由上面的 upload-artifact 拿到了。失败不该把整个 job 判红。
+        continue-on-error: true
         if: env.ANDROID_SIGNING_KEY == null && env.UPLOAD_ARTIFACT == 'true'
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
@@ -351,6 +360,8 @@ jobs:
   baiyi-android-collect:
     name: 汇总 APK
     needs: [baiyi-android-apk]
+    # 三个架构里任一失败也要把已出的 APK 收上来，否则一个架构挂掉就全丢
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Download all APKs
